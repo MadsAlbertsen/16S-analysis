@@ -41,7 +41,7 @@ flash -r 300 -f 475 -s 50 -m 50 -M 200 screened.1.fastq screened.2.fastq -o merg
 
 echo ""
 echo "Removing reads outside the length criteria"
-perl /space/users/malber06/16S-analysis/trim.fastq.length.pl -i merged.extendedFrags.fastq -o merged_screened.fastq -m 425 -x 525
+perl /space/users/malber06/16S-analysis/scripts/trim.fastq.length.pl -i merged.extendedFrags.fastq -o merged_screened.fastq -m 425 -x 525
 
 echo ""
 echo "Generating pseudo merged file"
@@ -55,7 +55,7 @@ join sample.header.txt sample.name.txt | sed 's/ /,/' | cut -f2-3 -d , | rev | s
 
 echo ""
 echo "Formatting the reads for qiime"
-perl /space/users/malber06/16S-analysis/merged.to.qiime.pl -i merged_screened_pseudo.fasta -s sampleid.txt -r -u 2 -m 10000
+perl /space/users/malber06/16S-analysis/scripts/merged.to.qiime.pl -i merged_screened_pseudo.fasta -s sampleid.txt -r -u 2 -m 10000
 
 echo ""
 echo "Qiime version and dependencies"
