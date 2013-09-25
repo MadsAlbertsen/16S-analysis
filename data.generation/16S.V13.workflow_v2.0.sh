@@ -8,6 +8,9 @@
 #  Mads Albertsen 2013
 #
 ###################################################################################################
+# PARAMETERS
+# take the first n reads from each raw file
+maxseqs=50000
 
 clear
 echo ""
@@ -25,10 +28,10 @@ done < samples
 
 echo ""
 echo "Unpacking all data and keeping the first 50.000 reads"
-
+nlines=$((maxseqs*4))
 gunzip *.gz
-head -q -n 200000 *R1* > r1.fastq
-head -q -n 200000 *R2* > r2.fastq
+head -q -n $nlines *R1* > r1.fastq
+head -q -n $nlines *R2* > r2.fastq
 
 echo ""
 echo "Screening for phiX contamination"
