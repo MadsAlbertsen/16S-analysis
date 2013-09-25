@@ -2,9 +2,6 @@
 #
 #  This workflow script generates otu_tables from raw V13 16S amplicon data.
 #
-#  It is currently only supported for internal use on Aalborg University,
-#  but feel free to use any parts if needed.
-#
 #  Mads Albertsen 2013
 #
 ###################################################################################################
