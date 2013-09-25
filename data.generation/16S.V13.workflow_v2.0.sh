@@ -52,7 +52,7 @@ find $rawseqs_path -name $NAME* -exec cp -t . {} \;
 done < samples
 
 echo ""
-echo "Unpacking all data and keeping the first 50.000 reads"
+echo "Unpacking all data and keeping the first $maxseqs reads"
 nlines=$((maxseqs*4))
 gunzip *.gz
 head -q -n $nlines *R1* > r1.fastq
