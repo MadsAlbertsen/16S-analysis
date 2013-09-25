@@ -12,6 +12,9 @@
 # take the first n reads from each raw file
 maxseqs=50000
 
+# FLASH parameters are in the body of the script
+
+#################
 # PATHS
 rawseqs_path="/space/sequences"
 phix_path="/space/databases/phix/phix"
@@ -62,7 +65,18 @@ bowtie2 -x $phix_path -1 r1.fastq -2 r2.fastq -S screened.sam --un-conc screened
 
 echo ""
 echo "Merging read 1 and 2 using FLASH"
-flash -r 300 -f 475 -s 50 -m 50 -M 200 screened.1.fastq screened.2.fastq -o merged
+# FLASH parameters
+# -m: minOverlap
+minOverlap=50
+# -M: maxOverlap
+maxOverlap=200
+# -r: average read length
+avReadLength=300
+# -f: average fragment length
+avFragLength=475
+#-s: standard deviation of fragment lengths
+fragSD=50
+flash -r $avReadLength -f $avFragLength -s $fragSD -m $minOverlap -M $maxOverlap screened.1.fastq screened.2.fastq -o merged
 
 echo ""
 echo "Removing reads outside the length criteria"
