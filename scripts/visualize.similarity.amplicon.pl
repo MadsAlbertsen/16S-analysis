@@ -105,7 +105,7 @@ if ($nons == 1){
 
 close INseqs;
 
-print OUT "node1\tnode2\ttype\tdetail\tsensus\n";
+print OUT "node1\tnode2\ttype\tdetail\tsensus\tposition\n";
 print OUT2 "OTU\tN\n";
 
 #Pretty stats
@@ -171,7 +171,7 @@ foreach my $sequence (keys %seqs){
 				my $rev = $seqs{$newotu}."m".$seqs{$sequence};
 				if (!exists($printed{$rev})){
 					my $pretty = $nucl[$count]."A";
-					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-A\t$ctype{$pretty}\n";
+					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-A\t$ctype{$pretty}\t$count\n";
 					my $hit = $seqs{$sequence}."m".$seqs{$newotu};
 					$printed{$hit} = 1;
 				}
@@ -187,7 +187,7 @@ foreach my $sequence (keys %seqs){
 				my $rev = $seqs{$newotu}."m".$seqs{$sequence};
 				if (!exists($printed{$rev})){
 					my $pretty = $nucl[$count]."T";
-					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-T\t$ctype{$pretty}\n";
+					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-T\t$ctype{$pretty}\t$count\n";
 					my $hit = $seqs{$sequence}."m".$seqs{$newotu};
 					$printed{$hit} = 1;
 				}
@@ -203,7 +203,7 @@ foreach my $sequence (keys %seqs){
 				my $rev = $seqs{$newotu}."m".$seqs{$sequence};
 				if (!exists($printed{$rev})){
 					my $pretty = $nucl[$count]."C";
-					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-C\t$ctype{$pretty}\n";
+					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-C\t$ctype{$pretty}\t$count\n";
 					my $hit = $seqs{$sequence}."m".$seqs{$newotu};
 					$printed{$hit} = 1;
 				}
@@ -219,7 +219,7 @@ foreach my $sequence (keys %seqs){
 				my $rev = $seqs{$newotu}."m".$seqs{$sequence};
 				if (!exists($printed{$rev})){
 					my $pretty = $nucl[$count]."G";
-					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-G\t$ctype{$pretty}\n";
+					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-G\t$ctype{$pretty}\t$count\n";
 					my $hit = $seqs{$sequence}."m".$seqs{$newotu};
 					$printed{$hit} = 1;
 				}
@@ -235,7 +235,7 @@ foreach my $sequence (keys %seqs){
 				my $rev = $seqs{$newotu}."m".$seqs{$sequence};
 				if (!exists($printed{$rev})){
 					my $pretty = $nucl[$count]."N";					
-					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-N\t$ctype{$pretty}\n";
+					print OUT "$seqs{$sequence}\t$seqs{$newotu}\t$stype{$pretty}\t$nucl[$count]-N\t$ctype{$pretty}\t$count\n";
 					my $hit = $seqs{$sequence}."m".$seqs{$newotu};
 					$printed{$hit} = 1;
 				}
@@ -250,7 +250,7 @@ foreach my $sequence (keys %seqs){
 			$missing{$sequence} = 1;
 			my $rev = $seqs{$newotuD}."m".$seqs{$sequence};
 			if (!exists($printed{$rev})){
-				print OUT "$seqs{$sequence}\t$seqs{$newotuD}\tIndel\t$nucl[$count]-D\t$nucl[$count]-D\n";
+				print OUT "$seqs{$sequence}\t$seqs{$newotuD}\tIndel\t$nucl[$count]-D\t$nucl[$count]-D\t$count\n";
 				my $hit = $seqs{$sequence}."m".$seqs{$newotuD};
 				$printed{$hit} = 1;
 			}
@@ -260,7 +260,7 @@ foreach my $sequence (keys %seqs){
 
 foreach my $sequence (keys %seqs){
 	if (!exists($missing{$sequence})){
-		print OUT "$seqs{$sequence}\t$seqs{$sequence}\tnone\tnone\tnone\n"
+		print OUT "$seqs{$sequence}\t$seqs{$sequence}\tnone\tnone\tnone\tnone\n"
 	}
 }
 
