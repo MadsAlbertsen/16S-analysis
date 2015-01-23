@@ -83,11 +83,4 @@ echo ""
 echo "Classifying the OTUs using 2013 greengenes"
 parallel_assign_taxonomy_rdp.py -c 0.8 -i otus_named.fa -o GG13 -r /space/databases/green_gene/gg_13_5_otus/rep_set/97_otus.fasta -t /space/databases/green_gene/gg_13_5_otus/taxonomy/97_otu_taxonomy.txt -O 10 --rdp_max_memory 30000 --rdp_classifier_fp /space/users/mni/software/rdp_classifier_2.2/rdp_classifier-2.2.jar
 
-echo ""
-echo "Classifying the OTUs using MiDAS 1.0"
-parallel_assign_taxonomy_rdp.py -c 0.8 -i otus_named.fa -o MiDAS_1 -r /space/databases/midas/midas_refseqs_v1.0.fasta -t /space/databases/midas/midas_taxonomy_v1.0.txt -O 2 --rdp_max_memory 30000 --rdp_classifier_fp /space/users/mni/software/rdp_classifier_2.2/rdp_classifier-2.2.jar
 
-
-echo ""
-echo "Classifying the OTUs using MiDAS 0.1"
-parallel_assign_taxonomy_rdp.py -c 0.8 -i otus_named.fa -o MiDAS_0 -r /space/databases/green_gene/gg_otus_4feb2011/rep_set/gg_97_otus_4feb2011.fasta -t /space/databases/midas/midas_taxonomy.txt -O 2 --rdp_max_memory 30000 --rdp_classifier_fp /space/users/mni/software/rdp_classifier_2.2/rdp_classifier-2.2.jar

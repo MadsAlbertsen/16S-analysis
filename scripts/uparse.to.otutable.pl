@@ -42,14 +42,17 @@ my $global_options = checkParams();
 
 my $in_uc;
 my $in_sampleid;
+my $in_tax;
 my $out;
 
 $in_uc = &overrideDefault("in.uc",'in_uc');
 $in_sampleid = &overrideDefault("sampleid.txt",'in_sampleid');
+$in_tax = &overrideDefault("in.tax",'in_tax');
 $out = &overrideDefault("otutable.txt",'out');
  
 my %count;
 my %sampleid;
+my %tax;
 
 ######################################################################
 # CODE HERE
@@ -72,6 +75,17 @@ while ( my $line = <in_sampleid_fh> ) {
 
 close in_sampleid_fh;
 
+### Read in the assigned taxonomy for each OTU
+open(in_tax_fh, $in_tax) or die("Cannot read file: $in_tax\n");
+
+while ( my $line = <in_tax_fh> ) {
+	chomp $line;   	
+	my @id = split(/\t/,$line);
+	$tax{$id[0]} = $id[1]; 
+}
+
+close in_tax_fh;
+
 ### Go through the read mapping file and extract OTU counts per sample
 open(in_uc_fh, $in_uc) or die("Cannot read file: $in_uc\n");
 
@@ -79,7 +93,7 @@ while ( my $line = <in_uc_fh> ) {
 	chomp $line;   	
 	#$line =~ s/\r\n//g;
 	my @id = split(/\t/,$line);
-	next if ($id[0] eq "N");
+	next if ($line !~ m/OTU/);
 	my @id_split = split(/:/,$id[8]);
 	my $sample = $id_split[0] . $id_split[1] . $id_split[2] . $id_split[9];
 	my $OTU = $id[9];
@@ -92,7 +106,7 @@ while ( my $line = <in_uc_fh> ) {
 }
 close in_uc_fh;
 
-#=cut
+
 ### Save the data to a file
 open(out_fh, ">$out") or die("Cannot create file: $out\n");
 
@@ -100,7 +114,7 @@ my $header = "OTU";
 foreach my $sample (keys %sampleid){
 		$header = "$header\t$sampleid{$sample}";
 	}
-print out_fh "$header\n";
+print out_fh "$header\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies\n";
 
 foreach my $OTU (keys %count){
 	my $OTU_count = $OTU;
@@ -111,11 +125,11 @@ foreach my $OTU (keys %count){
 			$OTU_count = "$OTU_count\t0";
 		}
 	}
-	print out_fh "$OTU_count\n";
+	$tax{$OTU} =~ s/;/\t/g;
+	print out_fh "$OTU_count\t$tax{$OTU}\n";
 }
 
 close out_fh;
-#=cut
 
 ######################################################################
 # TEMPLATE SUBS
@@ -124,7 +138,7 @@ sub checkParams {
     #-----
     # Do any and all options checking here...
     #
-    my @standard_options = ( "help|h+", "in_uc|u:s", "in_sampleid|s:s", "out|o:s");
+    my @standard_options = ( "help|h+", "in_uc|u:s", "in_sampleid|s:s", "in_tax|t:s", "out|o:s");
     my %options;
 
     # Add any other command line options, and the code to handle them
@@ -192,6 +206,7 @@ uparse.to.otutable.pl -u -s [-h -o]
  [-help -h]           Displays this basic usage information
  [-in_uc -u]          Input .uc file.
  [-in_sampleid -s]    Input sampleid file.
+ [-in_tax -t]         Input taxonomy file.
  [-out -o]            Output OTU table.
  
 =cut

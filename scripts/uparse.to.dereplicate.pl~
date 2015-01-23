@@ -68,6 +68,7 @@ while ( my $line = <in_fh> ) {
 	chomp $line;
      $linecount++;
 	if ($line =~ m/>/) {
+		print reads_fh "$line\n";
 		if($linecount > 1){
 			print reads_fh "$seq\n";
 			if (exists($counts{$seq})){
@@ -77,7 +78,6 @@ while ( my $line = <in_fh> ) {
 			}
 		}
 		$seq = "";
-		print reads_fh "$line\n";
 
 	}
 	else{
